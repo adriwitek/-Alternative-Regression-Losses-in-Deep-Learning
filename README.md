@@ -1,4 +1,4 @@
-# -Alternative-Regression-Losses-in-Deep-Learning
+# Alternative Regression Losses in Deep-Learning
 Master Thesis. Study the effect of  Alternative Regression Losses in Deep Learning.
 
 
