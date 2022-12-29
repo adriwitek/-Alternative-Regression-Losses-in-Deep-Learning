@@ -10,7 +10,8 @@ Some examples can be found at Results folder.
 Teh script call can be configured like this
 ```python
 ./nn_script  -r,--report_name report <str> 
-                  -n,--n_jobs <int> \n\t -d,--datasets <'all' | comma separated names> 
+                  -n,--n_jobs <int> 
+                  -d,--datasets <'all' | comma separated names> 
                   -l,--losses <'all' | comma separated names> 
                   -v,--debug <bool> 
                   -s,--size comma-separated-ints 
