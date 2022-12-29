@@ -9,14 +9,15 @@ Some examples can be found at Results folder.
 ## Usage 
 Teh script call can be configured like this
 ```python
-./nn_script --report_name report -r,--report_name <str> \n\t -n,--n_jobs <int> \n\t -d,--datasets <'all' | comma separated names> 
-                \n\t -l,--losses <'all' | comma separated names> 
-                \n\t -v,--debug <bool> 
-                \n\t -s,--size comma-separated-ints 
-                \n\t -e,--epochs <int>  
-                \n\t -t,--tolerance <int> (without this option training is fixed for --epochs epochs) 
-                \n\t -p,--patience <int> (without this option training is fixed for --epochs epochs) 
-                \n\t -b,--batch_size <int>
+./nn_script  -r,--report_name report <str> 
+                  -n,--n_jobs <int> \n\t -d,--datasets <'all' | comma separated names> 
+                  -l,--losses <'all' | comma separated names> 
+                  -v,--debug <bool> 
+                  -s,--size comma-separated-ints 
+                  -e,--epochs <int>  
+                  -t,--tolerance <int> (without this option training is fixed for --epochs epochs) 
+                  -p,--patience <int> (without this option training is fixed for --epochs epochs) 
+                  -b,--batch_size <int>
  ```
 
 Example
