@@ -1,0 +1,38 @@
+2022-12-31 08:14:45.051541			STARTING REPORT...
+
+2022-12-31 08:14:45.051623					 hidden layer sizes are: (50, 50)
+
+2022-12-31 08:14:45.051658					 MAX. Train allowed epochs: 5000
+
+2022-12-31 08:14:45.051687					 Stop Training if loss is not decreasing: False			 (False means models have been trained the maximun number of epochs.)
+
+2022-12-31 08:14:45.051715			-----> SWITCHING DATSET TO: abalone
+
+2022-12-31 08:14:45.066648					-----> USING NOW LOSS:mse
+
+2022-12-31 08:33:43.515879						-----> Generating report for LOSS:mse
+
+2022-12-31 08:46:18.320476					-----> USING NOW LOSS:mean_absolute_error
+
+2022-12-31 09:05:00.597946						-----> Generating report for LOSS:mean_absolute_error
+
+2022-12-31 09:17:30.654230					-----> USING NOW LOSS:log_cosh
+
+2022-12-31 09:36:30.638050						-----> Generating report for LOSS:log_cosh
+
+2022-12-31 09:49:12.069988					-----> USING NOW LOSS:huber
+
+2022-12-31 11:39:17.273462						-----> Generating report for LOSS:<class 'keras.losses.Huber'>
+
+2022-12-31 11:53:00.218688					-----> USING NOW LOSS:pseudohuber
+
+2022-12-31 13:35:13.744358						-----> Generating report for LOSS:<class '__main__.PseudohuberLoss'>
+
+2022-12-31 13:47:54.653790					-----> USING NOW LOSS:e_insensitive
+
+2022-12-31 15:41:50.263775						-----> Generating report for LOSS:<class '__main__.EpsilonInsensitiveLoss'>
+
+2022-12-31 15:55:08.676490			All work Done!
+
+2022-12-31 15:55:08.676584			Complete Script Execution Time: 460.3937 min.
+

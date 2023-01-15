@@ -75,8 +75,8 @@ N_BINS = 31 #Error distribution histogram
 
 
 #   Alpha(regularization) value range
-L_ALPHA = [10.**k for k in range(-6, 6)]
-#L_ALPHA = [10.**(-2)]
+#L_ALPHA = [10.**k for k in range(-6, 6)]
+L_ALPHA = [10.**(-2)]
 
 
 #   Huber and PseudoHuber Loss --> Delta value range
@@ -98,7 +98,7 @@ l_cuantile =  [ 0.5]
 ADDITIONAL_PARAM_GRID_QUANTILE =  {'regressor__mlp__loss__cuantile': l_cuantile} 
 
 
-#   ALL DATSETS AND LOSSES AVAIBLE AT SCRIP (Dont touch this macro unless new ONES its added!)
+#   ALL DATASETS AND LOSSES AVAIBLE AT SCRIP (Dont touch this macro unless new ONES its added!)
 
 CLIP_PREDICTIONS = True
 
@@ -106,14 +106,16 @@ DATASETS_TO_USE = [     'boston_housing',
                         'abalone' ,
                         'cpusmall',
                         'space_ga' ,
-                        'mg'
+                        'mg',
+                        'auto_mpg'
                 ]
 
 DATASETS_TARGET_NAMES = {   'boston_housing' : 'MEDV',
                             'abalone' : 'Rings',
                             'cpusmall' : 'usr',
-                            'space_ga' : 'Votos_Emitidos',
+                            'space_ga' : 'Proporción_Votos_Emitidos',
                             'mg' : 'Mackey-Glass',
+                            'auto_mpg': 'mpg'
                         }
 
 
@@ -123,6 +125,7 @@ DATASETS_CLIP_RANGE = {     'boston_housing' : (5,50),
                             'cpusmall' : (0,100),
                             'space_ga' : (-np.inf, np.inf) ,
                             'mg' : (-np.inf, np.inf),
+                            'auto_mpg': (-np.inf, np.inf),
                         }
 
 
@@ -131,14 +134,13 @@ DATASETS_CLIP_RANGE = {     'boston_housing' : (5,50),
                  
 LOSSES_TO_USE = [       'mse',
                         'mean_absolute_error',
-                        #'cosine_similarity',
+                        'cosine_similarity',
                         'log_cosh',
                         'huber',
                         'pseudohuber', 
                         'e_insensitive',
+                        'quantile',
 ]
-#                        'quantile',
-#]
 
 
 TRAIN_SEED = 123
@@ -335,7 +337,7 @@ def get_bostonhousing_dataset(source='scikit', debug= False ):
 
 
 
-#loads datset from libsvm file
+#loads dataset from libsvm file
 def get_data_from_libsvmfile(file_path):
     data = load_svmlight_file(file_path)
     #data[0] is an scipy.sparse.csr.csr_matrix
@@ -884,6 +886,29 @@ def plot_CV_model_evaluation(   x,
         plot_preddispersion_and_errdistribution(y, cv_y_pred_mean, target_name,save_path,save_report,bins,
                                                 scores_005 = scores_005 , scores_095 = scores_095,
                                                 clipped = False)  
+
+
+        if(debug):
+            print('\n\n\n\n' , file = file)
+            print('-------------------------------------------------------------' , file = file)
+            print('DEBUG INFO', file = file)
+            print('-------------------------------------------------------------', file = file)
+            print("\n Final predictions generated for median with Quantile Regression: (cv_y_pred_mean.ravel()): \n" ,file = file)
+            print(cv_y_pred_mean.ravel() ,file = file)
+            print('\t\t-------------------------------------------', file = file)
+            print("\n TRUE TARGETS : (y.ravel()): \n" ,file = file)
+            print(y.ravel() ,file = file)
+            print('\t\t-------------------------------------------', file = file)
+            print("\n Predictions  for Quantile=0.05: (scores_005.ravel()): \n" ,file = file)
+            print(scores_005.ravel() ,file = file)
+            print('\t\t-------------------------------------------', file = file)
+            print("\n Predictions  for Quantile=0.95: (scores_095.ravel()): \n" ,file = file)
+            print(scores_095.ravel() ,file = file)
+
+
+
+
+
         #plot_preddispersion_and_errdistribution(y, cv_y_pred_mean_clipped, target_name,save_path,save_report,bins,
         #                                        scores_005 = scores_005 , scores_095 = scores_095,
         #                                        clipped = True)  
@@ -1129,7 +1154,7 @@ def plot_cv_search_complete_report(     x,
     print('\n Best Model Info:', file = file)
     print('\t\t %.4f minutes for refitting the best model.' % (cv_estimator.refit_time_/60.), file = file)
     print(f'\t\t trained with: {model.n_features} features.', file = file)
-    print(f'\t\t datset size: {x.shape[0]}.', file = file)
+    print(f'\t\t dataset size: {x.shape[0]}.', file = file)
     print('\t\t hidden layer sizes: ', model.hidden_layers_sizes, file = file)
     print('\t\t training loss: ' + str(model.loss), file = file)
     print('\t\t training seed: ', model.random_state, file = file)
@@ -1385,7 +1410,7 @@ def main( argv):
         for dataset_name_i in datasets:
                 ####################################
                 #   DATA LOADING
-                update_log_status( debug= debug, report_folder_name = save_path, message = '-----> SWITCHING DATSET TO: ' + dataset_name_i )
+                update_log_status( debug= debug, report_folder_name = save_path, message = '-----> SWITCHING DATASET TO: ' + dataset_name_i )
 
                 x,y, target_name =  get_dataset(       dataset_name = dataset_name_i, 
                                                                 dataset_path = DATASETS_PATH, 

@@ -1,0 +1,38 @@
+2022-12-29 20:23:42.827136			STARTING REPORT... 		(Sotavento Script Version)
+
+2022-12-29 20:23:42.827219					 hidden layer sizes are: (100,)
+
+2022-12-29 20:23:42.827255					 MAX. Train allowed epochs: 5000
+
+2022-12-29 20:23:42.827284					 Stop Training if loss is not decreasing: False			 (False means models have been trained the maximun number of epochs.)
+
+2022-12-29 20:23:42.827312			-----> SWITCHING DATSET TO: sotavento
+
+2022-12-29 20:23:54.872166					-----> USING NOW LOSS:mse
+
+2022-12-29 21:00:39.589809						-----> Generating report for LOSS:mse
+
+2022-12-29 21:51:17.846284					-----> USING NOW LOSS:mean_absolute_error
+
+2022-12-29 22:26:41.317072						-----> Generating report for LOSS:mean_absolute_error
+
+2022-12-29 23:17:03.290565					-----> USING NOW LOSS:log_cosh
+
+2022-12-29 23:53:24.896645						-----> Generating report for LOSS:log_cosh
+
+2022-12-30 00:43:15.465085					-----> USING NOW LOSS:huber
+
+2022-12-30 03:32:35.229609						-----> Generating report for LOSS:<class 'keras.losses.Huber'>
+
+2022-12-30 04:24:45.877256					-----> USING NOW LOSS:pseudohuber
+
+2022-12-30 07:06:49.915772						-----> Generating report for LOSS:<class '__main__.PseudohuberLoss'>
+
+2022-12-30 07:57:36.075438					-----> USING NOW LOSS:e_insensitive
+
+2022-12-30 10:40:31.517789						-----> Generating report for LOSS:<class '__main__.EpsilonInsensitiveLoss'>
+
+2022-12-30 11:31:19.516929			All work Done!
+
+2022-12-30 11:31:19.516984			Complete Script Execution Time: 907.6115 min.
+

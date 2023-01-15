@@ -1,0 +1,208 @@
+-------------------------------------------------------------
+cross_val_predict MAE Scores (CLIPPED) per Loss:
+-------------------------------------------------------------
+MSE: 	0.08998409246931409
+MAE: 	0.08951553657184115
+LogCosh: 	0.08933852968086643
+Huber: 	0.08967299092996389
+Pseudo-Huber: 	0.08928211751046931
+e-insensitive: 	0.08951427592924188
+
+
+
+
+
+
+*************************************************************
+WILCOXON TEST:  MSE vs. MAE model errors
+*************************************************************
+WilcoxonResult(statistic=461731.0, pvalue=0.22223934933860434)
+
+	---> PERCENTAGE OF TIMES MSE  IS GREATER THAN  MAE:
+				0.5155234657039711
+
+
+
+
+
+
+*************************************************************
+WILCOXON TEST:  MSE vs. LogCosh model errors
+*************************************************************
+WilcoxonResult(statistic=450138.0, pvalue=0.04557516665822105)
+
+	---> PERCENTAGE OF TIMES MSE  IS GREATER THAN  LogCosh:
+				0.5234657039711191
+
+
+
+
+
+
+*************************************************************
+WILCOXON TEST:  MSE vs. Huber model errors
+*************************************************************
+WilcoxonResult(statistic=465171.5, pvalue=0.3224215924194612)
+
+	---> PERCENTAGE OF TIMES MSE  IS GREATER THAN  Huber:
+				0.5068592057761733
+
+
+
+
+
+
+*************************************************************
+WILCOXON TEST:  MSE vs. Pseudo-Huber model errors
+*************************************************************
+WilcoxonResult(statistic=443468.5, pvalue=0.014392985605258516)
+
+	---> PERCENTAGE OF TIMES MSE  IS GREATER THAN  Pseudo-Huber:
+				0.5335740072202166
+
+
+
+
+
+
+*************************************************************
+WILCOXON TEST:  MSE vs. e-insensitive model errors
+*************************************************************
+WilcoxonResult(statistic=463667.0, pvalue=0.27546989943306643)
+
+	---> PERCENTAGE OF TIMES MSE  IS GREATER THAN  e-insensitive:
+				0.5104693140794224
+
+
+
+
+
+
+*************************************************************
+WILCOXON TEST:  MAE vs. LogCosh model errors
+*************************************************************
+WilcoxonResult(statistic=473015.5, pvalue=0.6436470530575125)
+
+	---> PERCENTAGE OF TIMES MAE  IS GREATER THAN  LogCosh:
+				0.4902527075812274
+
+
+
+
+
+
+*************************************************************
+WILCOXON TEST:  MAE vs. Huber model errors
+*************************************************************
+WilcoxonResult(statistic=466323.0, pvalue=0.36169155907428496)
+
+	---> PERCENTAGE OF TIMES MAE  IS GREATER THAN  Huber:
+				0.4888086642599278
+
+
+
+
+
+
+*************************************************************
+WILCOXON TEST:  MAE vs. Pseudo-Huber model errors
+*************************************************************
+WilcoxonResult(statistic=473402.0, pvalue=0.6623694586449385)
+
+	---> PERCENTAGE OF TIMES MAE  IS GREATER THAN  Pseudo-Huber:
+				0.4844765342960289
+
+
+
+
+
+
+*************************************************************
+WILCOXON TEST:  MAE vs. e-insensitive model errors
+*************************************************************
+WilcoxonResult(statistic=478279.5, pvalue=0.9131879813994433)
+
+	---> PERCENTAGE OF TIMES MAE  IS GREATER THAN  e-insensitive:
+				0.4967509025270758
+
+
+
+
+
+
+*************************************************************
+WILCOXON TEST:  LogCosh vs. Huber model errors
+*************************************************************
+WilcoxonResult(statistic=456893.5, pvalue=0.12221711977271321)
+
+	---> PERCENTAGE OF TIMES LogCosh  IS GREATER THAN  Huber:
+				0.4888086642599278
+
+
+
+
+
+
+*************************************************************
+WILCOXON TEST:  LogCosh vs. Pseudo-Huber model errors
+*************************************************************
+WilcoxonResult(statistic=476041.0, pvalue=0.79534187080474)
+
+	---> PERCENTAGE OF TIMES LogCosh  IS GREATER THAN  Pseudo-Huber:
+				0.49747292418772565
+
+
+
+
+
+
+*************************************************************
+WILCOXON TEST:  LogCosh vs. e-insensitive model errors
+*************************************************************
+WilcoxonResult(statistic=478694.0, pvalue=0.9353020060296313)
+
+	---> PERCENTAGE OF TIMES LogCosh  IS GREATER THAN  e-insensitive:
+				0.49530685920577616
+
+
+
+
+
+
+*************************************************************
+WILCOXON TEST:  Huber vs. Pseudo-Huber model errors
+*************************************************************
+WilcoxonResult(statistic=456590.0, pvalue=0.11736723364873719)
+
+	---> PERCENTAGE OF TIMES Huber  IS GREATER THAN  Pseudo-Huber:
+				0.5126353790613718
+
+
+
+
+
+
+*************************************************************
+WILCOXON TEST:  Huber vs. e-insensitive model errors
+*************************************************************
+WilcoxonResult(statistic=469517.0, pvalue=0.48542557867739633)
+
+	---> PERCENTAGE OF TIMES Huber  IS GREATER THAN  e-insensitive:
+				0.5010830324909747
+
+
+
+
+
+
+*************************************************************
+WILCOXON TEST:  Pseudo-Huber vs. e-insensitive model errors
+*************************************************************
+WilcoxonResult(statistic=477659.0, pvalue=0.8802141038907338)
+
+	---> PERCENTAGE OF TIMES Pseudo-Huber  IS GREATER THAN  e-insensitive:
+				0.511913357400722
+
+
+
+
