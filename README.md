@@ -1,5 +1,5 @@
 # Alternative Regression Losses in Deep-Learning
-Master Thesis. Study the effect of  Alternative Regression Losses in Deep Learning.
+Master Thesis. Studying the effect of  Alternative Regression Losses in Deep Learning.
 
 
 ## About
@@ -49,7 +49,7 @@ Versions are important, since different packege versions in some libraries cause
 ## Installation
 
  **IMPORTANT!**
- Some losses require patching scikeras instalation, replacing a file due to keras - scikeras implementation. This patch can be foung at /scikeras_patch folder.
+ Some losses require patching scikeras installation, replacing a file due to keras - scikeras implementation. This patch can be foung at /scikeras_patch folder.
  It may need superuser rights, so in order to avoid it you can use an execution environment like conda.
 
 I recommend creating first an enviroment like conda to avoid package version problems:
