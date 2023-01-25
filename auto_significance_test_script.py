@@ -29,21 +29,17 @@ DEBUG = False       #if True re-print original raw taken predictions in each los
 
 
 # dict {report_name: dataset_name}
-'''
+
 REPORTS_NAMES_TO_USE = {    'boston_final_complete_19dic'  :  'boston_housing',
-                            'abalone_batch200'   :  'abalone' ,
-                            'cpu_batch200'   :  'cpusmall',
-                            'spacega_size50'   :  'space_ga' ,
-                            'mg_200'   :  'mg',
-                            'auto_mpg_batch_200'   :  'auto_mpg'
+                            #'abalone_batch200'   :  'abalone' ,
+                            #'cpu_batch200'   :  'cpusmall',
+                            #'spacega_size50'   :  'space_ga' ,
+                            #'mg_200'   :  'mg',
+                            #'auto_mpg_batch_200'   :  'auto_mpg',
+                            #'sotavento_size100_all'  :  'sotavento',
                 }
-'''
 
 
-REPORTS_NAMES_TO_USE = {    
-
-                            'sotavento_size100_all'  :  'sotavento',
-                }
 
           
 LOSSES_TO_USE = [       'mse',
@@ -309,8 +305,9 @@ def plot_errs_histograms(save_path, u_name, v_name, u_errs, v_errs):
 
     plt.title("Difference between  " + u_name + ' and ' + v_name + ' errors (per prediction).' )
     plt.xlabel( '(' + u_name + ' - ' + v_name + ') errors.' )
-    plt.ylabel("Difference Value")
-    _ = plt.hist(u_errs - v_errs, bins=N_BINS)
+    y_label = "Difference Value. ( " + str(N_BINS) + " bins used.)"
+    plt.ylabel(y_label)
+    _ = plt.hist(u_errs - v_errs, bins=N_BINS, color = "darkcyan")
 
     fig_name = 'ERRsDIFF__' + u_name + '__vs__' + v_name 
     plt.savefig(os.path.join(save_path,fig_name))
@@ -461,28 +458,37 @@ def main():
 
 
             # Wilcoxon
-            for u,v in combinations(  list(errors_by_loss_paths.keys()), 2  ):
-                
-                
+            #for u,v in combinations(  list(errors_by_loss_paths.keys()), 2  ):
+            for u in  list(errors_by_loss_paths.keys()):
                 u_loss_errs = np.memmap(errors_by_loss_paths[u] , dtype='float32', mode='r', shape=y.shape)
-                v_loss_errs = np.memmap(errors_by_loss_paths[v] , dtype='float32', mode='r', shape=y.shape)
+                
+                for v in  list(errors_by_loss_paths.keys()):
+                
+                
+                    if(u == v):
+                        continue
 
-                print('\n\n*************************************************************' , file = file)
-                print('WILCOXON TEST:  ' + str(LOSSES_SHORT_NAME[u]) + ' vs. ' + str(LOSSES_SHORT_NAME[v]) + ' model errors', file = file)
-                print('*************************************************************' , file = file)
+                    #u_loss_errs = np.memmap(errors_by_loss_paths[u] , dtype='float32', mode='r', shape=y.shape)
+                    v_loss_errs = np.memmap(errors_by_loss_paths[v] , dtype='float32', mode='r', shape=y.shape)
 
-                print( str(wilcoxon(u_loss_errs , v_loss_errs )), file = file)
-                print('\n\t---> PERCENTAGE OF TIMES ' +  str(LOSSES_SHORT_NAME[u]) + 'ERRROS ARE GREATER THAN  ' + str(LOSSES_SHORT_NAME[v]) + ':' , file = file)
-                percentage = (u_loss_errs > v_loss_errs ).sum() / x.shape[0]
-                print('\t\t\t\t' + str( percentage), file = file)
-                print('\n\n\n' , file = file)
+                    print('\n\n*************************************************************' , file = file)
+                    print('WILCOXON TEST:  ' + str(LOSSES_SHORT_NAME[u]) + ' vs. ' + str(LOSSES_SHORT_NAME[v]) + ' model errors', file = file)
+                    print('*************************************************************' , file = file)
+
+                    print( str(wilcoxon(u_loss_errs , v_loss_errs )), file = file)
+                    print('\n\t---> PERCENTAGE OF TIMES ' +  str(LOSSES_SHORT_NAME[u]) + 'ERRRORS ARE GREATER THAN  ' + str(LOSSES_SHORT_NAME[v]) + ':' , file = file)
+                    percentage = (u_loss_errs > v_loss_errs ).sum() / x.shape[0]
+                    print('\t\t\t\t' + str( percentage), file = file)
+                    print('\n\n\n' , file = file)
 
 
-                plot_errs_histograms(wilconxon_report_path, LOSSES_SHORT_NAME[u] , LOSSES_SHORT_NAME[v], u_loss_errs , v_loss_errs )
+                    plot_errs_histograms(wilconxon_report_path, LOSSES_SHORT_NAME[u] , LOSSES_SHORT_NAME[v], u_loss_errs , v_loss_errs )
 
-                #Free mem
+                    #Free mem
+                    #del u_loss_errs
+                    del v_loss_errs
+
                 del u_loss_errs
-                del v_loss_errs
                 
 
 
