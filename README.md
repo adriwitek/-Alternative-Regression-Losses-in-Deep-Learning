@@ -1,5 +1,5 @@
 # Alternative Regression Losses in Deep-Learning
-Master Thesis. Studying the effect of  Alternative Regression Losses in Deep Learning.
+Master Thesis. Studying the effect of  alternative regression losses in feedforward neural networks.
 
 
 ## About
@@ -7,7 +7,7 @@ nn_script is a python script that automatizes the study of diferent Feedforward 
 Some examples can be found at Results folder.
 
 ## Usage 
-Teh script call can be configured like this
+The script's call can be configured like this
 ```python
 ./nn_script  -r,--report_name report <str> 
                   -n,--n_jobs <int> 
@@ -26,31 +26,38 @@ Example
 ./nn_script --report_name report  --n_jobs 5 --datasets boston_housing --losses mse --size 20,20 --epochs 5000  --tolerance 1.e-16 --patience 500 --batch_size 200 --debug True
  ```
 
+
+
+## Data Flow within each neural network
+
+This is how Keras and Scikit-learn are connected. This diagram shows a complete meta-estimator. It's done this way so it is possible to do things easier,  like a Grid CV Search.
+
+![alt text](https://github.com/adriwitek/-Alternative-Regression-Losses-in-Deep-Learning/img/meta_estimator.png "Data Flow in each neural model.")
+
+
 ## MACROS 
-Some macros in the script are configurable. See code for further details.
+Some macros are configurable. See code for further details.
 
 
 ## Requeriments
-Versions are important, since different packege versions in some libraries cause some problems!
+Important since different package versions with some libraries may cause some problems!
 
 | Library  | Recommended Version |
 |:--------------------------------------------------------------:|:-------:|
 | Python                                                          |3.9 (or at least 3.8)|
-| tensorflow                  || 
-| keras                  || 
+| tensorflow                    |2.9.2| 
+| keras                  |2.9.0| 
 | Scikit-Learn                  |1.1.3| 
-| Scikeras                  || 
-| Matplotlib                  || 
-| Pandas                  || 
-| NumPy                 || 
+| Scikeras                  |0.9.0| 
+| Matplotlib                  |3.5.2| 
+| Pandas                  |1.4.4| 
+| NumPy                 |1.22.3| 
 
 
                  
 ## Installation
 
- **IMPORTANT!**
- Some losses require patching scikeras installation, replacing a file due to keras - scikeras implementation. This patch can be foung at /scikeras_patch folder.
- It may need superuser rights, so in order to avoid it you can use an execution environment like conda.
+
 
 I recommend creating first an enviroment like conda to avoid package version problems:
 ```python
@@ -62,3 +69,22 @@ And then install the dependencies:
  pip install -r requirements.txt 
  ```
  
+
+ **IMPORTANT!**
+ Some losses (custom implemented ones like epsilon-insensitive) require patching scikeras installation by replacing a file, due to keras - scikeras implementation. 
+ This patch can be foung at "/scikeras_patch folder/_saving_utils.py" and should replace the "__init__.py" file in scikeras installation folder.
+ 
+CAUTION: It may need superuser rights, so in order to avoid it you can use an execution environment like conda.
+
+You can path the scikeras lib by like this:
+
+
+```python
+mv scikeras_patch/_saving_utils.py  <<YOUR PYTHON INSTALLATION PATH>>/lib/<<YOUR PYTHON version>>/site-packages/scikeras/__init__.py
+ ```
+
+For example using a miniconda installation in home folder with python 3.9 command is:
+
+```python
+mv scikeras_patch/_saving_utils.py  /home/adriwitek/miniconda3/lib/python3.9/site-packages/scikeras/__init__.py
+ ```

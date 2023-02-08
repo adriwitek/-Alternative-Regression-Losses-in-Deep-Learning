@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 
 
-''' Script wil perfom and CV shiperparameter search to find optimal
+''' THIS VERSION ITS ONLY USED WITH SOTAVENTO DATASET!!
+    Script wil perfom and CV shiperparameter search to find optimal
         neural network hyperparameters
         using all the combinations specified in 
 
@@ -31,14 +32,13 @@ from tabnanny import verbose
 import matplotlib.pyplot as plt
 import sys
 import datetime
-import copy
 
 from sklearn.datasets import load_boston
 from sklearn.datasets import load_svmlight_file
 from scikeras.wrappers import KerasRegressor
 from sklearn.preprocessing import StandardScaler,MinMaxScaler
 from sklearn.metrics import  mean_absolute_error
-from sklearn.model_selection import  cross_val_predict, cross_val_score, KFold, GridSearchCV
+from sklearn.model_selection import   KFold, GridSearchCV
 from sklearn.pipeline import Pipeline
 from sklearn.compose import TransformedTargetRegressor
 from sklearn.base import clone
@@ -63,7 +63,6 @@ SHUFFLE = False
 #   SAVE PATHS
 SAVE_PATH =  os.path.dirname('/gaa/home/adrianrp/tfm/')
 MODEL_SAVING_NAME = 'mlp_search.nnsearch'
-#REPORT_SAVING_NAME = MODEL_SAVING_NAME.split('.')[0] + '_REPORT_RESULTS' #  Report folder in location different form .nnsearchfile
 REPORT_SAVING_NAME = ''
 DATASETS_PATH =  os.path.join(SAVE_PATH, 'DATASETS/') 
 
@@ -79,12 +78,10 @@ N_BINS = 31 #Error distribution histogram
 
 #   Alpha(regularization) value range
 L_ALPHA = [10.**k for k in range(-6, 6)]
-#L_ALPHA = [10.**(-2)]
 
 
 #   Huber and PseudoHuber Loss --> Delta value range
 l_delta = [1, 1.2, 1.4, 1.6 , 1.8 , 2]
-#l_delta.extend([10.**k for k in range(-8, 3)])
 ADDITIONAL_PARAM_GRID_HUBER = {'regressor__mlp__loss__delta': l_delta}  
 
 #   e-insensitive Loss --> epsilon  value range
@@ -141,9 +138,6 @@ VALIDATION_SEEDS = [111, 222, 333, 444, 555,666] #last one for cross_val_score()
 # CCC - SLURM CONFIG
 tf.config.set_visible_devices([], 'GPU')
 sys.path.append(os.getcwd()) 
-# Estas directivas no me funcionan pero tampoco son importantes
-# @ output = /gaa/home/adrianrp/tfm/slurm_std_output
-# @ error = /gaa/home/adrianrp/tfm/slurm_std_error
 
 
 
@@ -364,8 +358,7 @@ def get_bostonhousing_dataset(source='scikit', debug= False ):
     target_housing = ['MEDV']
     '''
 
-    #if(debug):
-    #    print("loading from scikit datasets  ...")
+
 
     with warnings.catch_warnings():
         # You should probably not use this dataset.
@@ -383,16 +376,12 @@ def get_bostonhousing_dataset(source='scikit', debug= False ):
 #loads datset from libsvm file
 def get_data_from_libsvmfile(file_path):
     data = load_svmlight_file(file_path)
-    #data[0] is an scipy.sparse.csr.csr_matrix
     return data[0].toarray(), data[1]
 
 
 
 def get_dataset(dataset_name,dataset_path = '', debug = False):
 
-
-    #if(debug):
-    #    print(   'Loading ' + dataset_name + 'dataset...')
 
     if(dataset_name == 'boston_housing' ):
         return  get_bostonhousing_dataset(source='scikit', debug= debug )
@@ -406,8 +395,7 @@ def get_dataset(dataset_name,dataset_path = '', debug = False):
             file_path = file_name
 
         x, y  = get_data_from_libsvmfile(file_path)
-        #if(debug):
-        #    print('Done!')
+
 
         return  x,y, DATASETS_TARGET_NAMES[dataset_name]                    
 
@@ -480,7 +468,6 @@ def create_scikerasmodel(   n_features = -1,
         callbacks = []
     
 
-    #mlp = PickleableKerasRegressor(
     mlp = KerasRegressor(
  
         #first keras function builder params
@@ -509,14 +496,10 @@ def create_scikerasmodel(   n_features = -1,
 
     # Using a metaestimator to escalate also the target
     y_transformer = StandardScaler()
-    #y_transformer = MinMaxScaler()
 
     inner_estimator = TransformedTargetRegressor(regressor=regr,
                                                  transformer=y_transformer)
 
-
-    #inner_estimator = TransformedTargetRegressor(regressor=regr,
-    #                                             transformer=None)
 
     return inner_estimator
 
@@ -647,7 +630,6 @@ def train_nn(   x,
     if(verbose):
         print('Training with CV Search...')
     t_0 = time.time()
-    #with parallel_backend('threading', n_jobs=n_jobs):
     cv_estimator.fit(x, y)
     t_1 = time.time() 
     cv_search_time =  (t_1 - t_0)/60.
@@ -673,7 +655,7 @@ def train_nn(   x,
                     }
     if(additional_hp_grid is not None):# if there were more hiperparameters in the cv search we store its info.
         saving_info['are_additional_hp'] = True
-        for k,v in additional_hp_grid.items(): #TODO Paralelizar esta operacion aunque tampoco es muy importante hacerlo
+        for k,v in additional_hp_grid.items(): 
             saving_info['additional_hp'].append(k)
             saving_info[k] = v
 
@@ -690,12 +672,6 @@ def train_nn(   x,
 
     with open(complete_path, 'wb') as f:  
         saving_files = joblib.dump(value = saving_info, filename= f, compress=compress_level)
-
-    #TODO arreglar el nonetype de savingfiles
-    #print('Results saved as '+ saving_name + '\n\t in this files: ' + saving_files )
-    
-    #if(debug):
-    #    print('Results saved in: ' + saving_route +  ' as: '+ saving_name )
 
 
 
@@ -767,7 +743,7 @@ def plot_preddispersion_and_errdistribution(y,
     plt.close()
 
 
-    # HISTOGRAMA DE DISPERSION DE LOS ERRORES
+    # HISTOGRAM WITH ERRS DISPERSION 
     err = y - cv_y_pred_mean
     plt.title("Validación cruzada: Histograma de Errores")
     plt.xlabel("Errores")
@@ -989,7 +965,6 @@ def plot_CV_model_evaluation(   x,
 
 
 
-    #print l_cv_y_pred,used for calc. cv_y_pred_mean and cv_y_pred_median to check results
     if(debug):
         print('\n\n\n\n' , file = file)
         print('-------------------------------------------------------------' , file = file)
@@ -1057,12 +1032,9 @@ def plot_CV_model_evaluation(   x,
     # summarize history for loss
     if(history):
         _ = plt.plot(history['loss'])
-        #Removed since its not real val loss and gridsearch cv refits over all passed data.
-        #_ = plt.plot(history['val_loss'])
         plt.title('Progreso del Error del Mejor Modelo')
         plt.ylabel('Función de Pérdida')
         plt.xlabel('Época')
-        #plt.legend(['train', 'test'], loc='upper right')
         if(save_report):
             fig_name = 'Best_Model_Loss_Progress'
             plt.savefig(os.path.join(save_path,fig_name))
@@ -1132,8 +1104,8 @@ def plot_cv_hp_search_report(   saving_info,
             print(hp_values_range,file = file)
             print('\nBest '+ hp_name + ' Value  = ' + str(cv_estimator.best_params_[hp]), file = file)
 
-        #param 2 es alpha
-        #param1 es el otro
+        #param 2 is alpha
+        #param1 is the other one
         
         # Get Test Scores Mean and std for each grid search
         grid_param_2_name = saving_info['additional_hp'][0]
@@ -1148,8 +1120,6 @@ def plot_cv_hp_search_report(   saving_info,
         plt.xscale("log")
         plt.xticks(grid_param_1)
         plt.xticks(rotation=45)
-        #plt.xticks(range(len(grid_param_1)), grid_param_1, rotation=45)
-
 
         for idx, val in enumerate(grid_param_2):
             _= plt.plot(grid_param_1, -scores_mean[idx], '-', label= grid_param_2_name + ': ' + str(val))
@@ -1210,7 +1180,6 @@ def plot_cv_search_complete_report(     x,
     '''
     assert not save_report or (save_report and save_path) or (save_report and save_name), 'Save report selected. Must indicate a valid path and/or filename.'
     assert n_cross_val_predict_execs >=1 , 'n_cross_val_predict_execs should be 1 or greater'
-    #assert ( (n_cross_val_predict_seeds is None) or ( len(n_cross_val_predict_seeds) == n_cross_val_predict_execs   )   ), 'n_cross_val_predict_seeds Should have the same length as n_cross_val_predict_execs'
     assert ( (n_cross_val_predict_seeds is None) or ( len(n_cross_val_predict_seeds) == n_cross_val_predict_execs  or len(n_cross_val_predict_seeds) == n_cross_val_predict_execs+1  )   ), 'n_cross_val_predict_seeds Should have the same length as n_cross_val_predict_execs'
 
 
@@ -1271,11 +1240,7 @@ def plot_cv_search_complete_report(     x,
     print('\t\t training seed: ', model.random_state, file = file)
     if(debug):
         print(cv_estimator.best_estimator_.regressor_.named_steps['mlp'], file = file)
-        #print('\n\n Keras obtained info:',file=file)
-        #keral_model = cv_estimator.best_estimator_.regressor_.named_steps['mlp'].model_
-        #print('\t Loss:' + str(keral_model.loss), file = file)
-        #print('\t Optimizer name:' + str(keral_model.optimizer.__class__.__name__), file = file)
-        #print('\t Optimizer config:' + str(keral_model.optimizer.get_config()), file = file)
+       
 
 
     print('*************************************************************\n\n\n\n', file = file)
@@ -1315,7 +1280,6 @@ def plot_cv_search_complete_report(     x,
 
 
     if(save_report):
-        #if(debug):
         if(True):
 
             print('\n\n\n\n' , file = file)
@@ -1330,10 +1294,6 @@ def plot_cv_search_complete_report(     x,
                     print(str(k) + ' : ' + str(v),file=file)
                 print('\n\n',file=file)
         file.close()
-
-    #if(debug):
-    #    print(f'Report saved in:{save_folder}')
-    #update_log_status( debug= debug, report_folder_name = '', message = '' ):
 
 
 

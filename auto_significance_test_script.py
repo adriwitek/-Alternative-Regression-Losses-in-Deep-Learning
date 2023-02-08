@@ -1,4 +1,8 @@
+#!/usr/bin/env python
 
+''' Script wil perfom wilcoxon significance test
+    over specified reports
+'''
 
 import os
 import numpy as np
@@ -15,8 +19,7 @@ import os.path as path
 
 
 
-#CURRENT_DIRECTORY = r'c:/Users/Hidra/Desktop'
-#DATASETS_PATH =  os.path.join( CURRENT_DIRECTORY,' DATASETS/') 
+
 
 CURRENT_DIRECTORY = r'G:\OneDrive\OneDrive - UAM\Sync\UAM\MASTER\TFM\CODIGO\REPORTS\_FINALES'
 DATASETS_PATH = r'G:\OneDrive\OneDrive - UAM\Sync\UAM\MASTER\TFM\CODIGO\DATASETS'
@@ -134,16 +137,14 @@ def get_bostonhousing_dataset(source='scikit', debug= False ):
 
 #loads datset from libsvm file
 def get_data_from_libsvmfile(file_path):
+
     data = load_svmlight_file(file_path)
-    #data[0] is an scipy.sparse.csr.csr_matrix
     return data[0].toarray(), data[1]
 
 
 def get_dataset(dataset_name,dataset_path = '', debug = False):
 
 
-    #if(debug):
-    #    print(   'Loading ' + dataset_name + 'dataset...')
 
     if(dataset_name == 'boston_housing' ):
         return  get_bostonhousing_dataset(source='scikit', debug= debug )
@@ -157,8 +158,6 @@ def get_dataset(dataset_name,dataset_path = '', debug = False):
             file_path = file_name
 
         x, y  = get_data_from_libsvmfile(file_path)
-        #if(debug):
-        #    print('Done!')
 
         return  x,y, DATASETS_TARGET_NAMES[dataset_name]                    
 
@@ -235,19 +234,16 @@ def get_array_of_predictions(start_string, end_string ,file_path,out_path, min_c
     content = content.replace('\n', '')
     content = content.replace(' ', '')
     content = content.replace('array([','')
-    #content = content.replace('[', '')
     content = content.replace(']', '')
 
 
     d = DELIMITADOR
-    #list_of_arrays = [arr + d for arr in content.split(d)]
     list_of_arrays = [arr  for arr in content.split(d)]
-    #content = content.replace(DELIMITADOR, '')
 
     list_of_np_arrays_clipped = []
 
 
-    #ISOLATING CV_PREDICTIONS
+    # ISOLATING CV_PREDICTIONS
     if(DEBUG):
         with open(out_path, 'a+') as file:  
             print('\n\n-------------------------------------------------------------------------------------------------------------' , file = file)
@@ -398,10 +394,7 @@ def main():
                 model_mean_clipped = mean_absolute_error(y.ravel() , y_pred_by_cv_clipped)
                 cv_MAEs_by_loss[loss_i] = model_mean_clipped
 
-                # Calculating MAE errors per prediction
-                #errs_clipped = np.abs(y - y_pred_by_cv_clipped)
-                #errors_by_loss[loss_i] = errs_clipped
-
+     
                 model_errors_ondisk[:] = np.abs(y - y_pred_by_cv_clipped)
                 errors_by_loss_paths[loss_i] = errs_temp_array_disk_path
 
@@ -425,7 +418,7 @@ def main():
                         print('MAE:  ' +  str(model_mean_clipped), file = file)
 
 
-                    # TODO DEBUG BORRAR ESTA LINEA DE DEBAJO:
+                    #  DEBUG
                     print('\t\t\t\t\t' + loss_i + '  SCORE:  ' + str(model_mean_clipped))
 
 
@@ -458,7 +451,6 @@ def main():
 
 
             # Wilcoxon
-            #for u,v in combinations(  list(errors_by_loss_paths.keys()), 2  ):
             for u in  list(errors_by_loss_paths.keys()):
                 u_loss_errs = np.memmap(errors_by_loss_paths[u] , dtype='float32', mode='r', shape=y.shape)
                 
@@ -468,7 +460,6 @@ def main():
                     if(u == v):
                         continue
 
-                    #u_loss_errs = np.memmap(errors_by_loss_paths[u] , dtype='float32', mode='r', shape=y.shape)
                     v_loss_errs = np.memmap(errors_by_loss_paths[v] , dtype='float32', mode='r', shape=y.shape)
 
                     print('\n\n*************************************************************' , file = file)
@@ -485,7 +476,6 @@ def main():
                     plot_errs_histograms(wilconxon_report_path, LOSSES_SHORT_NAME[u] , LOSSES_SHORT_NAME[v], u_loss_errs , v_loss_errs )
 
                     #Free mem
-                    #del u_loss_errs
                     del v_loss_errs
 
                 del u_loss_errs
