@@ -32,7 +32,7 @@ Example
 
 This is how Keras and Scikit-learn are connected. This diagram shows a complete meta-estimator. It's done this way so it is possible to do things easier,  like a Grid CV Search.
 
-![alt text](https://github.com/adriwitek/-Alternative-Regression-Losses-in-Deep-Learning/img/meta_estimator.png "Data Flow in each neural model.")
+![alt text](https://github.com/adriwitek/-Alternative-Regression-Losses-in-Deep-Learning/blob/main/img/meta_estimator.png "Data Flow in each neural model.")
 
 
 ## MACROS 
@@ -70,11 +70,14 @@ And then install the dependencies:
  ```
  
 
+
+## Applying Scikeras patch
+
  **IMPORTANT!**
  Some losses (custom implemented ones like epsilon-insensitive) require patching scikeras installation by replacing a file, due to keras - scikeras implementation. 
- This patch can be foung at "/scikeras_patch folder/_saving_utils.py" and should replace the "__init__.py" file in scikeras installation folder.
+ This patch can be foung at **"/scikeras_patch folder/_saving_utils.py"** and should replace the **"__init__.py"** file in scikeras installation folder.
  
-CAUTION: It may need superuser rights, so in order to avoid it you can use an execution environment like conda.
+CAUTION: It **may need superuser rights**, so in order to avoid it you can use an execution environment like conda.
 
 You can path the scikeras lib by like this:
 
@@ -83,7 +86,7 @@ You can path the scikeras lib by like this:
 mv scikeras_patch/_saving_utils.py  <<YOUR PYTHON INSTALLATION PATH>>/lib/<<YOUR PYTHON version>>/site-packages/scikeras/__init__.py
  ```
 
-For example using a miniconda installation in home folder with python 3.9 command is:
+For example using a miniconda installation in home folder with python 3.9 command became:
 
 ```python
 mv scikeras_patch/_saving_utils.py  /home/adriwitek/miniconda3/lib/python3.9/site-packages/scikeras/__init__.py
