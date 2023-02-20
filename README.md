@@ -21,10 +21,16 @@ The script's call can be configured like this
                   -b,--batch_size <int>
  ```
 
-Example
+Example:
 ```python
 ./nn_script --report_name report  --n_jobs 5 --datasets boston_housing --losses mse --size 20,20 --epochs 5000  --tolerance 1.e-16 --patience 500 --batch_size 200 --debug True
  ```
+
+Evolution of the script is shown by default in the standard output:
+![alt text](https://github.com/adriwitek/-Alternative-Regression-Losses-in-Deep-Learning/blob/main/img/execution_screenshot_1.png "Terminal Output Screenshot")
+
+This is an example of how a report of the script looks like:
+![alt text](https://github.com/adriwitek/-Alternative-Regression-Losses-in-Deep-Learning/blob/main/img/execution_screenshot_2.png "Terminal Output Screenshot2")
 
 
 
